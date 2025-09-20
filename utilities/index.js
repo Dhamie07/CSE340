@@ -1,6 +1,10 @@
+/* **************************************
+ * Filename: index.js
+ * Description: All general utilities for the application
+ * ************************************ */
 const invModel = require("../models/inventory-model")
 const Util = {}
-console.log("data")
+
 /* ************************
  * Constructs the nav HTML unordered list
  ************************** */
@@ -23,14 +27,6 @@ Util.getNav = async function (req, res, next) {
   list += "</ul>"
   return list
 }
-/* ****************************************
- * Middleware For Handling Errors
- * Wrap other function in this for 
- * General Error Handling
- **************************************** */
-Util.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next)
-
-module.exports = Util
 
 /* **************************************
 * Build the classification view HTML
@@ -41,7 +37,7 @@ Util.buildClassificationGrid = async function(data){
     grid = '<ul id="inv-display">'
     data.forEach(vehicle => { 
       grid += '<li>'
-      grid +=  '<a href="../../inv/detail/'+ vehicle.inv_id 
+      grid +=  '<a href="../../inv/detail/'+ vehicle.inv_id 
       + '" title="View ' + vehicle.inv_make + ' '+ vehicle.inv_model 
       + 'details"><img src="' + vehicle.inv_thumbnail 
       +'" alt="Image of '+ vehicle.inv_make + ' ' + vehicle.inv_model 
@@ -91,5 +87,12 @@ Util.buildInvDetailHtml = async function(invData) {
   html += '</div>'
   return html
 }
+
+/* ****************************************
+ * Middleware For Handling Errors
+ * Wrap other function in this for 
+ * General Error Handling
+ * **************************************** */
+Util.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next)
 
 module.exports = Util
